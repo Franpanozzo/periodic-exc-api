@@ -1,12 +1,14 @@
 const express = require('express');
 
 const {
-  httpGetAllUsers
+  httpGetAllUsers,
+  httpGetUser
 } = require('./users.controller');
 
 const usersRouter = express.Router();
 
 usersRouter.get('/', httpGetAllUsers);
+usersRouter.get('/:userEmail', httpGetUser);
 // playersRouter.get('/:userEmail', httpGetUser);
 // playersRouter.post('/', httpAddNewUser);
 // playersRouter.delete('/:userEmail', httpDeleteUser);

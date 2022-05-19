@@ -45,9 +45,12 @@ async function getAllUsers() {
     '__v': 0,
     '_id': 0
   });
-  // .sort({ flightNumber: 1 })  //Con menos uno estaria ordenando por valor descendente
-  // .skip(skip)
-  // .limit(limit);
+}
+
+async function getUser(userEmail) {
+  return await findUser({
+    email: userEmail
+  });
 }
 
 async function findUser(filter) {
@@ -64,5 +67,6 @@ async function saveUser(user) {
 
 module.exports = {
   getAllUsers,
+  getUser,
   loadUsersData
 };

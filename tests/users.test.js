@@ -29,6 +29,16 @@ describe('Players API', () => {
       .expect('Content-Type', /json/)
       .expect(200); 
     })
+
+    test('GET /users with the email as param should return 200 with the expected user', async () => {
+      const response = await request(app)
+      .get('/v1/users/francisco.panozzosf@gmail.com')
+      .expect('Content-Type', /json/)
+      .expect(200); 
+
+      const player = response.body; 
+      expect(player.last_name).toBe('Panozzo');
+    })
   
   })
 

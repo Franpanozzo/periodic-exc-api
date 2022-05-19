@@ -1,5 +1,6 @@
 const {
-  getAllUsers
+  getAllUsers,
+  getUser
 } = require('../../models/users.model');
 
 async function httpGetAllUsers(req, res) {
@@ -7,6 +8,19 @@ async function httpGetAllUsers(req, res) {
   //  ejercicio tenemos los mockeados y los que se van creando a traves de request, entonces no lo hago
   const users = await getAllUsers();
   return res.status(200).json(users);
+}
+
+async function httpGetUser(req, res) {
+  const userEmail = req.params.userEmail;
+
+  const user = await getUser(userEmail);
+  if(!user) {
+    return res.status(404).json({
+      error: 'User not found'
+    })
+  }
+
+  res.status(200).json(user);
 }
 
 // async function httpAddNewPlayer(req, res) {
@@ -51,6 +65,7 @@ async function httpGetAllUsers(req, res) {
 
 module.exports = {
   httpGetAllUsers,
+  httpGetUser,
   // httpAddNewPlayer,
   // httpDeletePlayer
 }
