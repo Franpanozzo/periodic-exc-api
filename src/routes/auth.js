@@ -8,7 +8,7 @@ function verifyToken(req, res, next){
   req.token  = bearerToken;
 
   jwt.verify(req.token, process.env.SECRET_KEY, (error, authData) => {
-    if(error) res.sendStatus(403) 
+    if(error) return res.sendStatus(403) 
     req.authData = authData;
     next();
   })
