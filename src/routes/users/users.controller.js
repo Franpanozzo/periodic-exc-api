@@ -1,12 +1,11 @@
 const {
   getAllUsers
 } = require('../../models/users.model');
-// const { processQueryParams } = require('../../services/query');
 
-function httpGetAllUsers(req, res) {
-  console.log('Entramo')
-  // const { skip, limit } = processQueryParams(req.query);
-  const users = getAllUsers();
+async function httpGetAllUsers(req, res) {
+  // Pense en aplicar paginación, pero capaz si tenemos millones de usuarios lo aplicaría, aca como en el
+  //  ejercicio tenemos los mockeados y los que se van creando a traves de request, entonces no lo hago
+  const users = await getAllUsers();
   return res.status(200).json(users);
 }
 
