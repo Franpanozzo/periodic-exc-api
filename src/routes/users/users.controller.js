@@ -1,6 +1,8 @@
 const {
   getAllUsers,
-  getUser
+  getUser,
+  validateUser,
+  saveUser
 } = require('../../models/users.model');
 
 async function httpGetAllUsers(req, res) {
@@ -22,14 +24,17 @@ async function httpGetUser(req, res) {
 }
 
 async function httpAddNewUser(req, res) {
-  // const player = req.body;
-  // let errorMessage = null;
+  const user = req.body;
+  let errorMessage = null;
 
-  // if(errorMessage = await validatePlayer(player)) {
-  //   return res.status(400).json({
-  //     error: errorMessage
-  //   })
-  // }
+  if(errorMessage = await validateUser(user)) {
+    return res.status(400).json({
+      error: errorMessage
+    })
+  }
+
+  await saveUser(user);
+  return res.status(201).json(user);
 }
 
 //   await addNewPlayer(player);

@@ -89,6 +89,30 @@ describe('Periodic Users API', () => {
       })
     
     })
+
+    describe('POST /users', () => {
+
+      test('POST /players shoud return 201 created and return the stored ', async () => {
+        const userData = {
+          "first_name": "Laura",
+          "last_name": "Fernandez",
+          "email": "laura.fernandez@gmail.com",
+          "sex": "F",
+          "age": 43,
+          "phone": 1121636382
+        };
+  
+        const response = await request(app)
+        .post('/v1/users')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .send(userData)
+        .expect('Content-Type', /json/)
+        .expect(201); 
+    
+        expect(response.body).toStrictEqual(userData);
+      })
+
+    })
   
   })
   

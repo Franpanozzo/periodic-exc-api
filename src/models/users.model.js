@@ -1,6 +1,10 @@
 const usersDatabase = require('./users.mongo');
+const {
+  validateNumber,
+  validateString
+} = require('../helpers/helpers')
 
-const sex = ["M","F"];
+const SEX = ['M', 'F'];
 
 const mockUsers = [
   {
@@ -65,8 +69,32 @@ async function saveUser(user) {
   })
 }
 
+function validateUser(user) {
+  if(typeof user !== 'object') return 'We recieve a JSON to post a user';
+
+  if(!user.email || !user.phone || !user.first_name || !user.last_name || !user.sex || !user.age) {
+    return 'Missing required player properties';
+  }
+
+  if(Object.keys(user).length > 6) return 'Unnecesary properties';
+
+  if(validateString(user.first_name) || validateString(user.last_name) || validateString(user.email) || validateString(user.sex) ||
+  validateNumber(user.phone) || validateNumber(user.age)) {
+    return 'Except for the phone and age, all fields should be strings'
+  }
+
+  if(!SEX.includes(user.sex)) user.sex = 'Not defined';
+
+  const emailRegEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  if(!emailRegEx.test(user.email)) return 'invalid email';
+
+  return null;
+}
+
 module.exports = {
   getAllUsers,
   getUser,
-  loadUsersData
+  loadUsersData,
+  validateUser,
+  saveUser
 };
