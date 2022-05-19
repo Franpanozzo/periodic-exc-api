@@ -2,15 +2,15 @@ const express = require('express');
 
 const {
   httpGetAllUsers,
-  httpGetUser
+  httpGetUser,
+  httpAddNewUser
 } = require('./users.controller');
 
 const usersRouter = express.Router();
 
-usersRouter.get('/', httpGetAllUsers);
+usersRouter.get('/',httpGetAllUsers);
 usersRouter.get('/:userEmail', httpGetUser);
-// playersRouter.get('/:userEmail', httpGetUser);
-// playersRouter.post('/', httpAddNewUser);
+usersRouter.post('/', httpAddNewUser);
 // playersRouter.delete('/:userEmail', httpDeleteUser);
 
 module.exports = usersRouter;
