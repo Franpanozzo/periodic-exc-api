@@ -25,6 +25,33 @@ const mockUsers = [
   }
 ]
 
+const fields = [
+  {
+    label: 'First Name',
+    value: 'first_name'
+  },
+  {
+    label: 'Last Name',
+    value: 'last_name'
+  },
+  {
+   label: 'Email Address',
+    value: 'email'
+  },
+  {
+   label: 'Phone Number',
+    value: 'phone'
+  },
+  {
+   label: 'Sex',
+    value: 'sex'
+  },
+  {
+   label: 'Age',
+   value: 'age'
+  }
+];
+
 async function loadUsersData() {
   const firstUser = await findUser({
     email: "francisco.panozzosf@gmail.com"
@@ -96,5 +123,6 @@ module.exports = {
   getUser,
   loadUsersData,
   validateUser,
-  saveUser
+  saveUser,
+  fields
 };

@@ -1,8 +1,11 @@
+const { Parser } = require('json2csv');
+
 const {
   getAllUsers,
   getUser,
   validateUser,
-  saveUser
+  saveUser,
+  fields
 } = require('../../models/users.model');
 
 async function httpGetAllUsers(req, res) {
@@ -37,9 +40,15 @@ async function httpAddNewUser(req, res) {
   return res.status(201).json(user);
 }
 
-//   await addNewPlayer(player);
-//   return res.status(201).json(player);
-// }
+async function httpDownloadUsers(req, res) {
+  const usersData = await getAllUsers();
+
+  const json2csv = new Parser({ fields });
+  const csv = json2csv.parse(usersData);
+  res.header('Content-Type', 'text/csv');
+  res.attachment('users.csv');
+  return res.send(csv);
+}
 
 // async function httpDeletePlayer(req, res) {
 //   if(req.headers['x-api-key'] !== process.env.API_KEY) {
@@ -62,9 +71,12 @@ async function httpAddNewUser(req, res) {
 //   })
 // }
 
+
+
 module.exports = {
   httpGetAllUsers,
   httpGetUser,
   httpAddNewUser,
+  httpDownloadUsers
   // httpDeletePlayer
 }

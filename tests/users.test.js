@@ -87,6 +87,14 @@ describe('Periodic Users API', () => {
         const player = response.body; 
         expect(player.last_name).toBe('Panozzo');
       })
+
+      test('GET /users/download should return 200 with a .csv file', async () => {
+        await request(app)
+        .get('/v1/users/download')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .expect('Content-Type', 'text/csv; charset=utf-8')
+        .expect(200); 
+      })
     
     })
 
