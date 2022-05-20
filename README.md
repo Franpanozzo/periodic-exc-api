@@ -11,7 +11,7 @@
 ## Login
   ### To be able to make requests to the API you need to first log in, passing you're username in the body
   - #### HTTP Request
-   `https://int0d29313.execute-api.us-east-1.amazonaws.com/prod/v1/login`
+   `GET https://2r5k1t0859.execute-api.us-east-1.amazonaws.com/prod/v1/login`
   - #### Body example
     ![image](https://user-images.githubusercontent.com/62455934/169497534-aed69481-3eb2-4cd9-80e6-fa8f3554fb9e.png)
 
@@ -23,12 +23,12 @@
   ### Get All Users
 
   - #### HTTP Request
-    `GET https://int0d29313.execute-api.us-east-1.amazonaws.com/prod/v1/users`
+    `GET https://2r5k1t0859.execute-api.us-east-1.amazonaws.com/prod/v1/users/`
     
   ### Get Specific User
   
   - #### HTTP Request
-    `GET https://int0d29313.execute-api.us-east-1.amazonaws.com/prod/v1/users/<userEmail>`
+    `GET https://2r5k1t0859.execute-api.us-east-1.amazonaws.com/prod/v1/users/<userEmail>`
     
   - #### URL Parameters
   | Parameter | Description  |
@@ -38,7 +38,7 @@
   ### Post user
   
   - #### HTTP Request
-    `POST https://int0d29313.execute-api.us-east-1.amazonaws.com/prod/v1/users`
+    `POST https://2r5k1t0859.execute-api.us-east-1.amazonaws.com/prod/v1/users`
     
   - #### Body example
   ![image](https://user-images.githubusercontent.com/62455934/169500141-fdbd8b18-70d2-44c2-8a24-67488da6cf75.png)
@@ -46,7 +46,7 @@
   ### Delete user 
   
   - #### HTTP Request
-  `DELETE https://int0d29313.execute-api.us-east-1.amazonaws.com/prod/v1/users/<userEmail>`
+  `DELETE https://2r5k1t0859.execute-api.us-east-1.amazonaws.com/prod/v1/users/<userEmail>`
   
   - #### URL Parameters
   | Parameter | Description  |
@@ -56,10 +56,15 @@
   ### Update user
   
   - #### HTTP Request
-  `PATCH https://int0d29313.execute-api.us-east-1.amazonaws.com/prod/v1/users`
+  `PATCH https://2r5k1t0859.execute-api.us-east-1.amazonaws.com/prod/v1/users/<userEmail>`
+  
+  - #### URL Parameters
+  | Parameter | Description  |
+  |----------|--------------|
+  | userEmail        | email of the user to update |
   
   - #### Body example
-  ![image](https://user-images.githubusercontent.com/62455934/169502539-3a70837c-ddc3-45eb-bb61-b39f06800946.png)
+  ![image](https://user-images.githubusercontent.com/62455934/169617603-e4388ad4-e830-4cec-853c-329599916794.png)
 
   ### .CSV file of all users in the system
   
