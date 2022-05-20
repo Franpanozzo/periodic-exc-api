@@ -233,14 +233,13 @@ describe('Periodic Users API', () => {
       const userData = {
         "first_name": "Laura",
         "last_name": "Fernandez",
-        "email": "laura.fernandez@gmail.com",
         "sex": "F",
         "age": 43,
         "phone": 1121636382
       };
       
       await request(app)
-      .patch('/v1/users')
+      .patch('/v1/users/laura.fernandez@gmail.com')
       .set('Authorization', `Bearer ${accessToken}`)
       .send(userData)
       .expect('Content-Type', /json/)
@@ -249,13 +248,12 @@ describe('Periodic Users API', () => {
 
     test('UPDATE /users should return 200 when trying to update someone and successfully updated it', async () => {
       const userData = {
-        "email": "francisco.panozzosf@gmail.com",
         "age": 22,
         "something": "some"
       }
       
       await request(app)
-      .patch('/v1/users')
+      .patch('/v1/users/francisco.panozzosf@gmail.com')
       .set('Authorization', `Bearer ${accessToken}`)
       .send(userData)
       .expect('Content-Type', /json/)

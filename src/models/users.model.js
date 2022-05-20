@@ -87,7 +87,7 @@ async function getUser(userEmail) {
 async function findUser(filter) {
   return await usersDatabase.findOne(filter, {
     '__v': 0,
-    '_id': 0
+    '_id': 0,
   });
 }
 
@@ -107,9 +107,9 @@ async function deleteUser(userEmail) {
   if(userDeleted.deletedCount !== 1) throw new Error(`User with email ${userEmail} not deleted`);
 }
 
-async function updateUser(userData) {
+async function updateUser(userEmail, userData) {
   const userModified = await usersDatabase.updateOne({
-    email: userData.email
+    email: userEmail
   }, userData);
 
   if(userModified.matchedCount === 0) throw new Error(`User with email ${userData.email} not updated`);

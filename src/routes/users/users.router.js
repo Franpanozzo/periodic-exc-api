@@ -16,6 +16,6 @@ usersRouter.get('/download', httpDownloadUsers);
 usersRouter.get('/:userEmail', httpGetUser);
 usersRouter.post('/', httpAddNewUser);
 usersRouter.delete('/:userEmail', httpDeleteUser);
-usersRouter.patch('/', httpUpdateUser);
+usersRouter.patch('/:userEmail', httpUpdateUser);
 
 module.exports = usersRouter;
