@@ -24,10 +24,12 @@
     "json2csv": "^5.0.7",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "serverless-http": "^3.0.1"
   },
   "devDependencies": {
     "jest": "^28.1.0",
+    "serverless-offline": "^8.8.0",
     "supertest": "^6.2.3"
   }
 }
