@@ -112,7 +112,7 @@ async function updateUser(userData) {
     email: userData.email
   }, userData);
 
-  if(userModified.modifiedCount === 0) throw new Error(`User with email ${userData.email} not updated`);
+  if(userModified.matchedCount === 0) throw new Error(`User with email ${userData.email} not updated`);
 }
 
 function validateUser(user) {

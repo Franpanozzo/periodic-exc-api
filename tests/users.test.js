@@ -240,7 +240,7 @@ describe('Periodic Users API', () => {
       };
       
       await request(app)
-      .patch('/v1/users/andrea.gomez@gmail.com')
+      .patch('/v1/users')
       .set('Authorization', `Bearer ${accessToken}`)
       .send(userData)
       .expect('Content-Type', /json/)
@@ -255,7 +255,7 @@ describe('Periodic Users API', () => {
       }
       
       await request(app)
-      .patch('/v1/users/francisco.panozzosf@gmail.com')
+      .patch('/v1/users')
       .set('Authorization', `Bearer ${accessToken}`)
       .send(userData)
       .expect('Content-Type', /json/)
