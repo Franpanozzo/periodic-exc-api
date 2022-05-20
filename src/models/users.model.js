@@ -100,7 +100,7 @@ function validateUser(user) {
   if(typeof user !== 'object') return 'We recieve a JSON to post a user';
 
   if(!user.email || !user.phone || !user.first_name || !user.last_name || !user.sex || !user.age) {
-    return 'Missing required player properties';
+    return 'Missing required user properties';
   }
 
   if(Object.keys(user).length > 6) return 'Unnecesary properties';
