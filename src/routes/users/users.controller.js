@@ -5,7 +5,9 @@ const {
   getUser,
   validateUser,
   saveUser,
-  fields
+  fields,
+  deleteUser,
+  updateUser
 } = require('../../models/users.model');
 
 async function httpGetAllUsers(req, res) {
@@ -50,33 +52,49 @@ async function httpDownloadUsers(req, res) {
   return res.send(csv);
 }
 
-// async function httpDeletePlayer(req, res) {
-//   if(req.headers['x-api-key'] !== process.env.API_KEY) {
-//     return res.status(403).json({
-//       forbidden: 'You need a special API KEY to do this operation'
-//     })
-//   }
-//   const playerId = +req.params.playerId;
+async function httpDeleteUser(req, res) {
+  const userEmail = req.params.userEmail;
 
-//   const existsPlayer = await existsPlayerWithId(playerId);
-//   if(!existsPlayer) {
-//     return res.status(404).json({
-//       error: 'Player not found'
-//     })
-//   }
+  const user = await getUser(userEmail);
+  if(!user) {
+    return res.status(404).json({
+      error: 'User not found'
+    })
+  }
 
-//   await deletePlayer(playerId);
-//   return res.status(200).json({
-//     ok: `Player ${playerId} succesfully deleted`
-//   })
-// }
+  await deleteUser(userEmail);
+  res.status(200).json({
+    ok: `User with email ${userEmail} succesfully deleted`
+  });
+}
 
+async function httpUpdateUser(req, res) {
+  const userData = req.body;
+  if(typeof userData.email !== 'string') {
+    return res.status(400).json({
+      error: 'must receive an email and as a string type'
+    })
+  }
+
+  const user = await getUser(userData.email);
+  if(!user) {
+    return res.status(404).json({
+      error: 'User not found'
+    })
+  }
+
+  await updateUser(userData);
+  res.status(200).json({
+    ok: `User with email ${userData.email} succesfully updated`
+  });
+}
 
 
 module.exports = {
   httpGetAllUsers,
   httpGetUser,
   httpAddNewUser,
-  httpDownloadUsers
-  // httpDeletePlayer
+  httpDownloadUsers,
+  httpDeleteUser,
+  httpUpdateUser
 }

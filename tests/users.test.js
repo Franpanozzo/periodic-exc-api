@@ -45,6 +45,18 @@ describe('Periodic Users API', () => {
       .expect(200); 
     })
 
+    test('GET /users to an unexisting respond status 404', async () => {
+      const response = await request(app)
+      .get('/v1/users/lorenzo.giovanni@hotmail.com')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect('Content-Type', /json/)
+      .expect(404); 
+
+      expect(response.body).toStrictEqual({
+        error: 'User not found'
+      })
+    })
+
     test('GET /users with the email as param should return 200 with the expected user', async () => {
       const response = await request(app)
       .get('/v1/users/francisco.panozzosf@gmail.com')
@@ -149,7 +161,7 @@ describe('Periodic Users API', () => {
       });
     })
 
-    test('POST /users shoud return 400 when posting a user with invalid email', async () => {
+    test('POST /users shoud respnse 400 when posting a user with invalid email', async () => {
       const userData = {
         "first_name": "Laura",
         "last_name": "Fernandez",
@@ -170,49 +182,94 @@ describe('Periodic Users API', () => {
       });
     })
 
-    // test('POST /players shoud return 400 when posting a player with invalid position ', async () => {
-    //   const playerData = {
-    //     first_name: "Bronny",
-    //     last_name: "James",
-    //     position: "SG",
-    //     team: {
-    //       teamId: 26,
-    //       full_name: "Sacramento Kings"
-    //     }
-    //   };
-    //   const response = await request(app)
-    //   .post('/v1/players')
-    //   .set('x-api-key', process.env.API_KEY)
-    //   .send(playerData)
-    //   .expect('Content-Type', /json/)
-    //   .expect(400); 
-  
-    //   expect(response.body).toStrictEqual({
-    //     error: 'Invalid position - Choose one: G,F,C,G-F,F-C'
-    //   });
-    // })
-    
-    // test('POST /players shoud return 400 when posting a player with invalid team', async () => {
-    //   const playerData = {
-    //     first_name: "Bronny",
-    //     last_name: "James",
-    //     position: "G",
-    //     team: {
-    //       teamId: 40,
-    //       full_name: "Seattle Supersonics"
-    //     }
-    //   };
-    //   const response = await request(app)
-    //   .post('/v1/players')
-    //   .set('x-api-key', process.env.API_KEY)
-    //   .send(playerData)
-    //   .expect('Content-Type', /json/)
-    //   .expect(400); 
-  
-    //   expect(response.body).toStrictEqual({
-    //     error: 'Not matching team was found in the Id'
-    //   });
-    // })
+  })
+
+  describe('DELETE /users', () => {
+
+    test('DELETE /users should response 404 when tryng to delete an unexisting user', async () => {
+      await request(app)
+      .delete('/v1/users/andrea.gomez@gmail.com')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect('Content-Type', /json/)
+      .expect(404);
+    })
+
+    test('DELETE /players should response 200 when tring to delete someone and succesfully delete it', async () => {
+      const userData = {
+        "first_name": "Laura",
+        "last_name": "Fernandez",
+        "email": "laura.fernandez@gmail.com",
+        "sex": "F",
+        "age": 43,
+        "phone": 1121636382
+      };
+
+      const response = await request(app)
+      .delete(`/v1/users/laura.fernandez@gmail.com`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect('Content-Type', /json/)
+      .expect(200);
+
+      expect(response.body).toStrictEqual({
+        ok: `User with email laura.fernandez@gmail.com succesfully deleted`
+      });
+
+      const response2 = await request(app)
+      .get(`/v1/users/laura.fernandez@gmail.com`)
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect('Content-Type', /json/)
+      .expect(404);
+
+      expect(response2.body).toStrictEqual({
+        error: `User not found`
+      });
+    })
+
+  })
+
+  describe('UPDATE /users', () => {
+
+    test('UPDATE /users should return 404 when trying to update an unexisting user', async () => {
+      const userData = {
+        "first_name": "Laura",
+        "last_name": "Fernandez",
+        "email": "laura.fernandez@gmail.com",
+        "sex": "F",
+        "age": 43,
+        "phone": 1121636382
+      };
+      
+      await request(app)
+      .patch('/v1/users/andrea.gomez@gmail.com')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(userData)
+      .expect('Content-Type', /json/)
+      .expect(404);
+    })
+
+    test('UPDATE /users should return 200 when trying to update someone and successfully updated it', async () => {
+      const userData = {
+        "email": "francisco.panozzosf@gmail.com",
+        "age": 22,
+        "something": "some"
+      }
+      
+      await request(app)
+      .patch('/v1/users/francisco.panozzosf@gmail.com')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .send(userData)
+      .expect('Content-Type', /json/)
+      .expect(200);
+
+      const response = await request(app)
+      .get('/v1/users/francisco.panozzosf@gmail.com')
+      .set('Authorization', `Bearer ${accessToken}`)
+      .expect('Content-Type', /json/)
+      .expect(200); 
+
+      expect(response.body.age).toBe(22);
+      expect(Object.keys(response.body).length).toBe(6);
+    })
 
   })
   

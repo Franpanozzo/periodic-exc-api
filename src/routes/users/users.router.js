@@ -4,7 +4,9 @@ const {
   httpGetAllUsers,
   httpGetUser,
   httpAddNewUser,
-  httpDownloadUsers
+  httpDownloadUsers,
+  httpDeleteUser,
+  httpUpdateUser
 } = require('./users.controller');
 
 const usersRouter = express.Router();
@@ -13,6 +15,7 @@ usersRouter.get('/',httpGetAllUsers);
 usersRouter.get('/download', httpDownloadUsers);
 usersRouter.get('/:userEmail', httpGetUser);
 usersRouter.post('/', httpAddNewUser);
-// playersRouter.delete('/:userEmail', httpDeleteUser);
+usersRouter.delete('/:userEmail', httpDeleteUser);
+usersRouter.patch('/:userEmail', httpUpdateUser);
 
 module.exports = usersRouter;
