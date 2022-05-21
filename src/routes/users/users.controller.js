@@ -71,11 +71,6 @@ async function httpDeleteUser(req, res) {
 async function httpUpdateUser(req, res) {
   const userEmail = req.params.userEmail;
   const userData = req.body;
-  if(typeof userEmail !== 'string') {
-    return res.status(400).json({
-      error: 'must receive an email and as a string type'
-    })
-  }
 
   const user = await getUser(userEmail);
   if(!user) {
