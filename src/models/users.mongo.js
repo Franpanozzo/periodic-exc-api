@@ -19,7 +19,7 @@ const usersSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  sex: {  // Puede ser un free agent
+  sex: {
     type: String,
     required: true
   },
